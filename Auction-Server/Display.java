@@ -37,30 +37,32 @@ public class Display extends JPanel implements ActionListener {
 
         add(scrollPane, c);
 
-        JTextField txtstockSelect = new JTextField("");
-        // txtstockSelect.setPlaceHolderTextField("Search");
+        JTextField txtstockSelect = new JTextField("");//Create a TextFlied to get user inputs(Stock symbol)    
+        add(txtstockSelect, c); //Add textField to gridBag
 
-        add(txtstockSelect, c);
+        JButton btnEnter = new JButton("Enter"); //Button to enter the data to search history
 
-        JButton btnEnter = new JButton("Enter");
+        add(btnEnter, c); //Add button to the gridBag
 
-        add(btnEnter, c);
-
-        DecimalFormat df = new DecimalFormat();
+        DecimalFormat df = new DecimalFormat(); //To get the bid price only to 4 decimal places
         df.setMaximumFractionDigits(4);
+	    
+	// What happens when clicked on the 'Enter' button
         btnEnter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                String input = txtstockSelect.getText();
+                String input = txtstockSelect.getText(); //get the input text and assign to a String
+		    
+		//loop through the HistoryofVariation HashMap
                 for (Map.Entry<String, ArrayList<HistorOfVariation>> entry : HistorOfVariation.history.entrySet()) {
-                    if (entry.getKey().equals(input)) {
-                        ArrayList test = entry.getValue();
-                        Iterator<HistorOfVariation> historyItr = test.iterator();
-                        textArea.append("History of " + input + "\n");
+                    if (entry.getKey().equals(input)) { //Check if the input String equals
+                        ArrayList test = entry.getValue(); //Get the value of the input key
+                        Iterator<HistorOfVariation> historyItr = test.iterator(); //to iterate through the history of stocks list
+                        textArea.append("History of " + input + "\n"); //Label the headers
                         textArea.append("Time\tBid\tBidder\n");
                         while (historyItr.hasNext()) {
-                            HistorOfVariation historyItem = historyItr.next();
-                            textArea.append("@ " + historyItem.time + "\t" + df.format(historyItem.updatedPrice) + "\t" + historyItem.bidder + " \n");
+                            HistorOfVariation historyItem = historyItr.next(); //assign the iterator value to a variable
+                            textArea.append("@ " + historyItem.time + "\t" + df.format(historyItem.updatedPrice) + "\t" + historyItem.bidder + " \n"); //print the item in the class
                         }
                         textArea.append("\n\n");
                     }
@@ -85,6 +87,8 @@ public class Display extends JPanel implements ActionListener {
 
             //System.out.println(HistorOfVariation.history);
             for (Map.Entry<String, ItemDetails> entry : StocksDB.stockList.entrySet()) {
+		
+		    // Get the stock prices of the given stocks
                 if (entry.getKey().equals("FB") || entry.getKey().equals("VRTU") || entry.getKey().equals("MSFT") || entry.getKey().equals("GOOGL") || entry.getKey().equals("YAHOO") || entry.getKey().equals("XLNX") || entry.getKey().equals("TSLA") || entry.getKey().equals("TXN")) {
 
                     textArea.append(entry.getKey() + "\t" + entry.getValue().itemPrice + "\t" + entry.getValue().securityName + "\n");
@@ -118,5 +122,3 @@ public class Display extends JPanel implements ActionListener {
         server.server_loop();
     }
 }
-
-	
