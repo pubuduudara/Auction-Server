@@ -1,3 +1,4 @@
+// Group no 1. E/15/280, E/15/350
 import java.util.*; 
 
 class VisualServer extends MainServer { 
@@ -10,12 +11,12 @@ class VisualServer extends MainServer {
     }
 
     @Override 
-    public synchronized void postMSG(Boolean obj) {
-	// I can override and make function synchronized 
+    public synchronized void postMSG(Boolean obj) { // synchronized methods to connect multiple users
+
 	msgs.add(obj);
     }
 
-    public synchronized Boolean getMSG() {
+    public synchronized Boolean getMSG() { // synchronized methods to connect multiple users
 	if(!msgs.isEmpty()) return msgs.remove(); 	    
 	return null; 
     }

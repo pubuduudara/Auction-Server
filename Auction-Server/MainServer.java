@@ -1,7 +1,7 @@
+// Group no 1. E/15/280, E/15/350
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 
 public class MainServer {
 
